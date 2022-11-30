@@ -2,6 +2,7 @@ package com.totoledao.todolist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,22 @@ class MainActivity : AppCompatActivity() {
                 val todo = Todo(todoTitle)
                 todoAdapter.addTodo(todo)
                 inputTodo.text.clear()
+            }
+        }
+
+        inputTodo.setOnEditorActionListener { _, i, _ ->
+            when(i){
+                EditorInfo.IME_ACTION_DONE -> {
+                    val todoTitle = inputTodo.text.toString()
+                    if(todoTitle.isNotEmpty()) {
+                        val todo = Todo(todoTitle)
+                        todoAdapter.addTodo(todo)
+                        inputTodo.text.clear()
+                    }
+                    true
+                }
+
+                else -> false
             }
         }
 
